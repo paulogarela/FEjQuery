@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block principal %}
+
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.3/js/jquery.dataTables.js"></script>
+<script>
+
+    $(document).ready( function () {
+        var oTable1 = $('#table').dataTable({
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [ 3 ] },
+                ],
+            "sDom": '<"top"><"bottom"><"clear">'
+        });
+        $("tfoot input").keyup( function () {
+                oTable1.fnFilter( this.value, $("tfoot input").index(this) );
+            });
+        // $('#table').DataTable();
+    } );
+</script>
+
+
+<!-- Start Main Content -->
+<div class="row-fluid">
+    <div class="span12">
+
+        <!-- Start Table Showcase -->
+        <div class="row-fluid">
+            <div class="span12">
+                <h3><center>Projetos em Andamento</center></h3>
+                <div class="widget dark">
+                    <div class="widget-head">
+                        <div class="toolbar">
+                            <div class="btn-group">
+                                <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
+                                    <li><a tabindex="-1" href="#"><i class="icon-eye-open"></i> Ver</a></li>
+                                    <li><a tabindex="-1" href="#"><i class="icon-trash"></i> Deletar</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-content no-padding">
+                        <div class="widget-content-inner">
+                            <table class="table table-hover" data-responsive='table' id="table">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Núcleo</th>
+                                        <th>Gerente</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dupla in lista_geral %}
+                                    <tr class="odd gradeX">
+                                        <td>{{ dupla.0.nome}}</td>
+                                        <td>{{ dupla.2 }}</td>
+                                        <td>{{ dupla.1 }}</td>
+                                        <td class="center">
+                                            <div class="tr-action">
+                                                <div class="tr-action-inner">
+                                                    <a href="/projeto_perfil/{{ projeto.id }}" class="btn btn-info"><i class="icon icon-white  icon-search"></i></a>
+                                                    <a href="/projeto_deletar/{{ projeto.id }}" class="btn btn-danger"><i class="icon icon-white icon-trash"></i></a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th><input type="text" name="search_nome" placeholder="Pesquisar por nome" class="input-block-level" /></th>
+                                        <th><input type="text" name="search_nucleo" placeholder="Pesquisar por núcleo" class="input-block-level" /></th>
+                                        <th><input type="text" name="search_gerente" placeholder="Pesquisar por gerente" class="input-block-level" /></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Table Showcase -->
+    </div>
+</div>
+
+{% endblock %}

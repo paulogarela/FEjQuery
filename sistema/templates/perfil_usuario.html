@@ -1,0 +1,262 @@
+{% extends 'base.html' %}
+{% block principal %}
+
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.3/js/jquery.dataTables.js"></script>
+<script>
+
+    $(document).ready( function () {
+        var oTable1 = $('#table').dataTable({
+            "aoColumnDefs": [
+                { "bSortable": false, "aTargets": [ 2 ] },
+                ],
+            "sDom": '<"top"><"bottom"><"clear">'
+        });
+        $("tfoot input").keyup( function () {
+                oTable1.fnFilter( this.value, $("tfoot input").index(this) );
+            });
+        // $('#table').DataTable();
+    } );
+</script>
+
+
+
+<!-- Start Main Content -->
+                    <div class="row-fluid">
+                        <div class="span12">
+
+                            <!-- Start Profile Page -->
+                            <div id="profile-page-wrapper">
+
+                                <div class="profile-page-header">
+
+                                </div>
+
+                                <div class="profile-page-photo">
+                                    <div class="row-fluid">
+                                        <div class="span12">
+                                            <div class="profile-photo">
+                                                <img src="/static/img/default_avatar.png" class="img-polaroid">
+                                                <div class="profile-info">
+                                                    <span class="name" ><h3 style='color:#ffffff;'>{{membro.nome}} {{membro.sobrenome}}</h3></span>
+
+                                                    <span><i class="icon icon-white  iconelusive-user"></i> {{membro.sobrenome}}, {{membro.nome}}</span>
+                                                    <span><i class="icon icon-white iconelusive-mail-alt"></i> {{membro.email}}</span>
+
+                                                </div>
+
+                                            </div>
+                                            <div class='pull-right'>
+                                                <a href="mailto:{{membro.email}}"><button class="btn pull-right"><i class="icon icon-envelope"></i>E-mail</button></a>
+
+                                                {%if coordenador == True%}
+                                                <br>
+                                                <br>
+                                                <p>
+                                                <a href="/deleta_usuario/{{membro.id}}"><button class="btn pull-right"><i class="iconelusive-remove"></i></button></a>
+                                                </p>
+
+                                                {%endif%}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+<!--
+                                <div class="profile-content">
+                                    <div class="row-fluid">
+                                        <div class="span12">
+                                                <div class="row-fluid">
+                                                    <div class="span12">
+
+                                                        <div class="row-fluid">
+                                                            <div class="span12">
+                                                                <div class="widget dark">
+                                                                    <div class="widget-head">
+                                                                        <span class="title">Projetos</span>
+                                                                    </div>
+                                                                    <div class="widget-content no-padding">
+                                                                        <div class="widget-content-inner">
+                                                                            <table class="table table-hover" data-responsive='table' id="table">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Projeto</th>
+                                                                                        <th>Cargo</th>
+                                                                                        <th>Núcleo</th>
+                                                                                        <th></th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    {% for cargo in lista_cargo %}
+                                                                                    <tr class="odd gradeX">
+                                                                                        <td>{{cargo.projeto.nome}}</td>
+                                                                                        <td>{{cargo.cargo}}</td>
+                                                                                        <td>{{cargo.nucleo.nome}}</td>
+                                                                                        <td class="center">
+                                                                                            <div class="tr-action">
+                                                                                                <div class="tr-action-inner">
+                                                                                                    <a href="/projeto_perfil/{{cargo.projeto.id}}" class="btn btn-info"><i class="icon icon-white  icon-eye-open"></i>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    {% endfor %}
+                                                                                </tbody>
+                                                                                <tfoot>
+                                                                                    <tr>
+                                                                                        <th><input type="text" name="search_projeto" placeholder="Pesquisar por projeto" class="input-block-level" /></th>
+                                                                                        <th><input type="text" name="search_cargo" placeholder="Pesquisar por cargo" class="input-block-level" /></th>
+                                                                                        <th><input type="text" name="search_nucleo" placeholder="Pesquisar por núcleo" class="input-block-level" /></th>
+                                                                                        <th></th>
+                                                                                    </tr>
+                                                                                </tfoot>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+-->
+
+
+
+                                            <hr>
+                                            <h3>Projetos atuais</h3>
+
+                                            <div class="profile-content">
+                                    <div class="row-fluid">
+                                        <div class="span12">
+                                                <div class="row-fluid">
+                                                    <div class="span12">
+                                                        <!-- Start Table Showcase -->
+                                                        <div class="row-fluid">
+                                                            <div class="span12">
+                                                                <div class="widget dark">
+                                                                    <div class="widget-head">
+                                                                        <span class="title">Projetos atuais</span>
+                                                                    </div>
+                                                                    <div class="widget-content no-padding">
+                                                                        <div class="widget-content-inner">
+                                                                            <table class="table table-hover" data-responsive='table' id="table">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Projeto</th>
+                                                                                        <th>Cargo</th>
+                                                                                        <th>Núcleo</th>
+                                                                                        <th></th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    {% for cargo in lista_cargo %}
+                                                                                    {% if cargo.projeto.etapa != "Finalizado"%}
+                                                                                    <tr class="odd gradeX">
+                                                                                        <td>{{cargo.projeto.nome}}</td>
+                                                                                        <td>{{cargo.cargo}}</td>
+                                                                                        <td>{{cargo.nucleo.nome}}</td>
+                                                                                        <td class="center">
+                                                                                            <div class="tr-action">
+                                                                                                <div class="tr-action-inner">
+                                                                                                    <a href="/projeto_perfil/{{cargo.projeto.id}}" class="btn btn-info"><i class="icon icon-white  icon-eye-open"></i>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    {%endif%}
+                                                                                    {% endfor %}
+                                                                                </tbody>
+                                                                                <tfoot>
+                                                                                    <tr>
+                                                                                        <th><input type="text" name="search_projeto" placeholder="Pesquisar por projeto" class="input-block-level" /></th>
+                                                                                        <th><input type="text" name="search_cargo" placeholder="Pesquisar por cargo" class="input-block-level" /></th>
+                                                                                        <th><input type="text" name="search_nucleo" placeholder="Pesquisar por núcleo" class="input-block-level" /></th>
+                                                                                        <th></th>
+                                                                                    </tr>
+                                                                                </tfoot>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div><!-- End Table Showcase -->
+                                                    </div>
+                                                </div>
+
+
+                                            <hr>
+
+                                            <h3>Projetos antigos</h3>
+
+                                            <div class="profile-content">
+                                    <div class="row-fluid">
+                                        <div class="span12">
+                                                <div class="row-fluid">
+                                                    <div class="span12">
+                                                        <!-- Start Table Showcase -->
+                                                        <div class="row-fluid">
+                                                            <div class="span12">
+                                                                <div class="widget dark">
+                                                                    <div class="widget-head">
+                                                                        <span class="title">Projetos antigos</span>
+                                                                    </div>
+                                                                    <div class="widget-content no-padding">
+                                                                        <div class="widget-content-inner">
+                                                                            <table class="table table-hover" data-responsive='table' id="table">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Projeto</th>
+                                                                                        <th>Cargo</th>
+                                                                                        <th>Núcleo</th>
+                                                                                        <th></th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    {% for cargo in lista_cargo %}
+                                                                                    {% if cargo.projeto.etapa == "Finalizado"%}
+                                                                                    <tr class="odd gradeX">
+                                                                                        <td>{{cargo.projeto.nome}}</td>
+                                                                                        <td>{{cargo.cargo}}</td>
+                                                                                        <td>{{cargo.nucleo.nome}}</td>
+                                                                                        <td class="center">
+                                                                                            <div class="tr-action">
+                                                                                                <div class="tr-action-inner">
+                                                                                                    <a href="/projeto_perfil/{{cargo.projeto.id}}" class="btn btn-info"><i class="icon icon-white  icon-eye-open"></i>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    {%endif%}
+                                                                                    {% endfor %}
+                                                                                </tbody>
+                                                                                <tfoot>
+                                                                                    <tr>
+                                                                                        <th><input type="text" name="search_projeto" placeholder="Pesquisar por projeto" class="input-block-level" /></th>
+                                                                                        <th><input type="text" name="search_cargo" placeholder="Pesquisar por cargo" class="input-block-level" /></th>
+                                                                                        <th><input type="text" name="search_nucleo" placeholder="Pesquisar por núcleo" class="input-block-level" /></th>
+                                                                                        <th></th>
+                                                                                    </tr>
+                                                                                </tfoot>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div><!-- End Table Showcase -->
+                                                    </div>
+                                                </div>
+
+                                            <hr>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- End Profile Page -->
+
+                        </div>
+                    </div><!-- End -->
+{% endblock %}
